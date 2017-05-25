@@ -1,0 +1,27 @@
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+	}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+tr:nth-child(even) {
+	
+}
+
+.panel-body a {
+    word-break:break-all
+}
+
+.panel-primary > .panel-heading {
+	background-color: #888888;
+}
+
+h4 {
+	text-align: center;
+}
