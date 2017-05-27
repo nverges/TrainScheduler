@@ -1,7 +1,6 @@
 // Link to Firebase
 // https://console.firebase.google.com/u/0/project/trainscheduler-f08a8/database/data  
 
-
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyDe4elCqbItFpRNHTslpWNxG9orOco5DzU",
@@ -32,7 +31,7 @@ $("#submit").on("click", function(event) {
   // grabs user input and stores into variables
   name = $("#trainName").val().trim();
   destination = $("#destination").val().trim();
-  startDate = $("#firstTrain").val().trim();
+  firstTrain = $("#firstTrain").val().trim();
   frequency = $("#frequency").val().trim();
 
   // push info to firebase
@@ -64,15 +63,13 @@ dataRef.ref().on("child_added", function(snapshot) {
     console.log(snapshot.val());
 
     // First Time (pushed back 1 year to make sure it comes before current time)
-    var initialTimeConverted = moment(snapshot.val().initialTrainTime, "hh:mm").subtract(1, "years");
+    var initialTimeConverted = moment(snapshot.val().firstTrain, "hh:mm").subtract(1, "years");
     console.log(initialTimeConverted);
 
 
     // Current Time
     var currentTime = moment();
     console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
-
-    console.log(currentTime);
 
     // Calculate time difference
     var diffTime = moment().diff(moment(initialTimeConverted), "minutes");
@@ -83,8 +80,8 @@ dataRef.ref().on("child_added", function(snapshot) {
     console.log("TIME REMAINDER = " + timeRemainder);
 
     // Next Train
-    // arrival = moment().add(minAway, "minutes");
-    arrival = moment(arrival).format("hh:mm");
+    arrival = moment().add(minAway, "minutes");
+    // arrival = moment(arrival).format("hh:mm");
     console.log("ARRIVAL TIME: " + moment(arrival).format("hh:mm"));
 
     // Minutes Until Train
@@ -93,9 +90,9 @@ dataRef.ref().on("child_added", function(snapshot) {
 
 
 
-  // Add employee to list
+  // Add train to list
   let trainInfo = $('<tr>');
-  // Append employee info to new <tr>. (Using template strings from ES6)
+  // Append train info to new <tr>. (Using template strings from ES6)
   trainInfo.append(`<td>${snapshot.val().name}</td>`);
   trainInfo.append(`<td>${snapshot.val().destination}</td>`);
   trainInfo.append(`<td>${snapshot.val().frequency}</td>`);
@@ -103,7 +100,7 @@ dataRef.ref().on("child_added", function(snapshot) {
   trainInfo.append(`<td>${minAway}</td>`);
 
 
-  // Append the new employee row in table 
+  // Append the new train info to table 
   $('#train-table').append(trainInfo);
 
 
@@ -113,15 +110,6 @@ dataRef.ref().on("child_added", function(snapshot) {
   console.log("ERRORS: " + errorObject.code);
 
 });
-
-  // // order by date added
-  // dataRef.ref().orderByChild("dateAdded").on("child_added"
-  // $("#name-display").html(snapshot.val().name);
-  // $("#name-display").html(snapshot.val().name);
-  // $("#name-display").html(snapshot.val().name);
-  // $("#name-display").html(snapshot.val().name);
-  // );
-
 
 
 
