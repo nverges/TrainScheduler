@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Employee Data Management</title>
+	<title>Train Scheduler</title>
 
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -26,12 +26,13 @@
 <div class="container">
 
 	<!-- Jumbotron for Title -->
-	<div class="jumbotron" style="background-color: #888888; color: white; margin-top: 20px">
+	<div class="jumbotron" style="">
 		<h1 class="text-center"><strong>Train Scheduler</strong></h1>
 		<br>
 		<h4>Choo Choooooooo</h4>
-		<!-- <p><img src="assets/images/majorpayne.jpg" alt="majorpayne" align="middle"></p> -->
 	</div>
+
+	<!-- <p><img src="assets/images/majorpayne.jpg" alt="majorpayne" id="majorpayne"></p> -->
 
 	<!-- This row will handle all of the retrieved articles -->
 	<div class="row">
@@ -48,41 +49,29 @@
 
 				<!-- This main panel will hold each of the resulting articles -->
 				<div class="panel-body" id="currEmployee">
-				<div class="panel panel-default">
-	  <!-- Default panel contents -->
+					<div class="panel panel-default">
+		  
+		  			<!-- Default panel contents -->
+					<table id="train-table">
+					  <tr>
+					    <th>Train Name</th>
+					    <th>Destination</th>
+					    <th>Frequency (min)</th>
+					    <th>Next Arrival</th>
+					    <th>Minutes Away</th>
+					  </tr>
 
-				<table id="employee-table">
-				  <tr>
-				    <th>Train Name</th>
-				    <th>Destination</th>
-				    <th>Frequency (min)</th>
-				    <th>Next Arrival</th>
-				    <th>Minutes Away</th>
-				  </tr>
+						<!-- Output displayed here as <tr> -->
 
-				 <td id="name-display"></td>
-				    <td id="role-display"></td>
-				    <td id="startDate-display"></td>
-				    <td id="monthsWorked"></td>
-				    <td id="monthlyRate-display"></td>
-				    <td id="totalBilled"></td>
-				  </tr>
-<!-- 				  <tr>
-				    <td id="name-display"></td>
-				    <td id="destination-display"></td>
-				    <td id="frequency-display"></td>
-				    <td id="nextArrival-display"></td>
-				    <td id="minutesAway-display"></td>
-				  </tr> -->
-				 </table>
-				  
+					 </table>
 	  
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Row for Employee Input panel -->
+
+	<!-- Row for Train Input panel -->
 	<div class="row">
 		<div class="col-sm-12">
 		<br>
@@ -98,29 +87,29 @@
 
 				  	  <!-- Here we create the text box for capturing the search term-->
 					  <div class="form-group">
-					    <label for="empName">Train Name</label>
-					    <input type="text" class="form-control" id="employeeName">
+					    <label for="trainName">Train Name</label>
+					    <input type="text" class="form-control" id="trainName">
 					  </div>
 
 					    <div class="form-group">
-					    <label for="pwd">Destination</label>
-						<input type="text" class="form-control" id="employeeRole">			  
+					    <label for="destination">Destination</label>
+						<input type="text" class="form-control" id="destination">			  
 					  </div>
 
 				  	  <!-- -->
 					  <div class="form-group">
-					    <label for="startDate">First Train Time (HH:mm - military time)</label>
-					    <input type="text" class="form-control" id="startDate">
+					    <label for="firstTrain">First Train Time (HH:mm - military time)</label>
+					    <input type="text" class="form-control" id="firstTrain">
 					  </div>
 
 				  	  <!--  -->
 					  <div class="form-group">
-					    <label for="monthlyRate">Frequency (min)</label>
-					    <input type="text" class="form-control" id="monthlyRate">
+					    <label for="frequency">Frequency (min)</label>
+					    <input type="text" class="form-control" id="frequency">
 					  </div>
 
 					  <!-- Here we have our final submit button -->
-					  <button type="submit" class="btn btn-default" id="submit"> Submit</button>
+					  <button type="submit" class="btn btn-default" id="submit">Add Train</button>
   					  
 					</form>
 				</div>
@@ -128,17 +117,16 @@
 		</div>
 	</div>
 
-
-
 	<!-- Footer Region -->
 	<div class="row">
 		<div class="col-sm-12">
 			
 			<!-- Line Break followed by closing -->
 			<hr>
-			<h5 class="text-center"><small>&copy; Nick Verges - UA Bootcamp 2017  <i class="fa fa-train"></i></small></h5>
+			<h5 class="text-center"><small>Nick Verges - UA Bootcamp 2017  <i class="fa fa-train"></i></small></h5>
 		</div>
 	</div>
+
 </div>
 	
 <!-- jQuery JS -->

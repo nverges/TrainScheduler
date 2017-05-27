@@ -14,14 +14,21 @@ tr:nth-child(even) {
 	
 }
 
-.panel-body a {
+.panel-body, a {
     word-break:break-all
 }
 
-.panel-primary > .panel-heading {
+.panel-primary > .panel-heading,
+.jumbotron {
 	background-color: #888888;
+}
+
+.jumbotron {
+	color: white; 
+	margin-top: 20px;
 }
 
 h4 {
 	text-align: center;
 }
+

@@ -1,3 +1,7 @@
+// Link to Firebase
+// https://console.firebase.google.com/u/0/project/trainscheduler-f08a8/database/data  
+
+
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyDe4elCqbItFpRNHTslpWNxG9orOco5DzU",
@@ -15,28 +19,28 @@ var dataRef = firebase.database();
 
 // variables
 var name = "";
-var role = "";
-var startDate = 0;
-var monthlyRate = 0;
-var monthsWorked = 0;
-var totalBilled = 0;
+var destination = "";
+var firstTrain = 0;
+var frequency = 0;
+var minAway;
+var arrival;
 
 // on click event 
 $("#submit").on("click", function(event) {
   event.preventDefault();
 
   // grabs user input and stores into variables
-  name = $("#employeeName").val().trim();
-  role = $("#employeeRole").val().trim();
-  startDate = $("#startDate").val().trim();
-  monthlyRate = $("#monthlyRate").val().trim();
+  name = $("#trainName").val().trim();
+  destination = $("#destination").val().trim();
+  startDate = $("#firstTrain").val().trim();
+  frequency = $("#frequency").val().trim();
 
   // push info to firebase
   dataRef.ref().push({
     name: name,
-    role: role,
-    startDate: startDate,
-    monthlyRate: monthlyRate
+    destination: destination,
+    firstTrain: firstTrain,
+    frequency: frequency
   });
 
   // Clear all input fields 
@@ -50,32 +54,57 @@ $("#submit").on("click", function(event) {
 // "grab everything on the root level when a child is added. Then, pass that in to snapshot. Then, once it is added, it will grab values for each child"
 dataRef.ref().on("child_added", function(snapshot) {
 
-  console.log(snapshot.val());
-  console.log(snapshot.val().name);
-  console.log(snapshot.val().role);
-  console.log(snapshot.val().startDate);
-  console.log(snapshot.val().monthlyRate);
+  // console.log(snapshot.val());
+  // console.log(snapshot.val().name);
+  // console.log(snapshot.val().destination);
+  // console.log(snapshot.val().firstTrain);
+  // console.log(snapshot.val().frequency);
 
-  // Calculate months worked (multiply by -1 to remove negative sign)
-  monthsWorked = moment().diff(moment(snapshot.val().startDate), 'months');
-  console.log('Months worked: ', monthsWorked);
+    // Print the initial data to the console.
+    console.log(snapshot.val());
 
-  // Calculate total billed
-  totalBilled = monthsWorked * snapshot.val().monthlyRate;
-  console.log('Total billed: ', totalBilled);
+    // First Time (pushed back 1 year to make sure it comes before current time)
+    var initialTimeConverted = moment(snapshot.val().initialTrainTime, "hh:mm").subtract(1, "years");
+    console.log(initialTimeConverted);
+
+
+    // Current Time
+    var currentTime = moment();
+    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+    console.log(currentTime);
+
+    // Calculate time difference
+    var diffTime = moment().diff(moment(initialTimeConverted), "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
+
+    // Time remaining
+    var timeRemainder = diffTime % snapshot.val().frequency;
+    console.log("TIME REMAINDER = " + timeRemainder);
+
+    // Next Train
+    // arrival = moment().add(minAway, "minutes");
+    arrival = moment(arrival).format("hh:mm");
+    console.log("ARRIVAL TIME: " + moment(arrival).format("hh:mm"));
+
+    // Minutes Until Train
+    minAway = snapshot.val().frequency - timeRemainder;
+    console.log("MINUTES UNTIL NEXT TRAIN: " + minAway);
+
+
 
   // Add employee to list
-  let employeeRow = $('<tr>');
+  let trainInfo = $('<tr>');
   // Append employee info to new <tr>. (Using template strings from ES6)
-  employeeRow.append(`<td>${snapshot.val().name}</td>`);
-  employeeRow.append(`<td>${snapshot.val().role}</td>`);
-  employeeRow.append(`<td>${snapshot.val().startDate}</td>`);
-  employeeRow.append(`<td>${monthsWorked}</td>`);
-  employeeRow.append(`<td>${snapshot.val().monthlyRate}</td>`);
-  employeeRow.append(`<td>${totalBilled}</td>`);
+  trainInfo.append(`<td>${snapshot.val().name}</td>`);
+  trainInfo.append(`<td>${snapshot.val().destination}</td>`);
+  trainInfo.append(`<td>${snapshot.val().frequency}</td>`);
+  trainInfo.append(`<td>${arrival}</td>`);
+  trainInfo.append(`<td>${minAway}</td>`);
+
 
   // Append the new employee row in table 
-  $('#employee-table').append(employeeRow);
+  $('#train-table').append(trainInfo);
 
 
 // handle errors
